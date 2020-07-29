@@ -17,7 +17,7 @@
 
   // CDN에서 파일 URI가져오기
   ruliFunctions.getFileURIFromRepo = function(filePath, queryString) {
-    const repoAddress = 'https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer/';
+    const repoAddress = 'https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer@master/';
     const repoFilePathString = '';
     const defaultQueryString = '';
     if(!queryString) {
@@ -53,7 +53,11 @@
     document.head.appendChild(styleElement);
   }
   // 댓삭기
-  ruliFunctions.delAllComments = function () {
+  ruliFunctions.delAllComments = function (button) {
+    if(button.disabled) {
+      return false;
+    }
+    button.disabled="disabled";
     var commentData = [];
     for (var i = 0; i < $(".d_mycomment").length; i++) {
       let commentItem = $(".d_mycomment")[i];
@@ -99,8 +103,13 @@
     }
   }
   ruliFunctions.delAllCommentsBtn = function() {
-    var $commentTable = $("#mycomment").find(".text_over_table");
-    var delBtnHtml = "<div class=\"btn_light btn_delete\" style=\"\" onclick=\"ruliFunctions.delAllComments();\">전체 삭제</div>";
+    var $commentTable = $("#mycomment").find(".table_body");
+    var delBtnHtml = 
+      "<tr>" +
+      "  <td colspan=\"4\">" +
+      "    <button class=\"btn_light btn_delete\" style=\"float:right;\" onclick=\"ruliFunctions.delAllComments(this);\">전체 삭제</button>" +
+      "  </td>" +
+      "<tr>";
     $commentTable.append(delBtnHtml);
   }
   ruliFunctions.commentsPageProc = function() {
@@ -120,7 +129,7 @@
   // 실행부분
   // 즉시실행
   ruliFunctions.execute = function() {
-    ruliFunctions.enqueueStyle( ruliFunctions.getFileURIFromRepo("styles/style.css") );
+    ruliFunctions.enqueueStyle( ruliFunctions.getFileURIFromRepo("styles/style.min.css") );
   }
   // DOM 로드 이후 실행
   ruliFunctions.onLoad = function() {
