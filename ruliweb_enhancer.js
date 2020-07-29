@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Ruliweb Enhancer
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/hdd1013/ruliweb_enhancer/
 // @version      0.1
 // @description  근근웹++
 // @author       hdd1013
-// @match        *ruliweb.com/*
+// @match        *.ruliweb.com/*
+// @run-at       document-start
 // @grant        none
 // ==/UserScript==
 
@@ -13,53 +14,42 @@
 
   // Your code here...
   var ruliFunctions = window.ruliFunctions = {};
-  var $commentTable = $("#mycomment").find(".text_over_table");
-  var delBtnHtml = "<div class=\"btn_light btn_delete\" style=\"\" onclick=\"ruliFunctions.delAllComments();\">전체 삭제</div>";
-  $commentTable.append(delBtnHtml);
 
-  ruliFunctions.delAllComments = function () {
-    var commentData = [];
-    for (var i = 0; i < $(".d_mycomment").length; i++) {
-      let commentItem = $(".d_mycomment")[i];
-      let currentComment = {};
-      currentComment.commentId = $(commentItem).attr("comment-id");
-      currentComment.articleId = $(commentItem).attr("article-id");
-      currentComment.boardId = $(commentItem).attr("board-id");
-      currentComment.isDeleted = false;
-      commentData.push(currentComment);
+  // Github의 파일 URI가져오기
+  ruliFunctions.getFileURIFromRepo = function(filePath, queryString) {
+    const repoAddress = 'https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer/';
+    const repoFilePathString = '';
+    const defaultQueryString = '';
+    if(!queryString) {
+      queryString = defaultQueryString;
     }
-
-    var t = 'https://api.ruliweb.com/';
-    var deleteCounter = 0;
-    for (var j = 0; j < commentData.length; j++) {
-      var d = {};
-      d.comment_id = commentData[j].commentId;
-      d.article_id = commentData[j].articleId;
-      d.board_id = commentData[j].boardId;
-
-      $.ajax({
-        url: t + "procDeleteMyComment",
-        type: "POST",
-        data: d,
-        dataType: "json",
-        xhrFields: {
-          withCredentials: !0
-        },
-        success: function (e) {
-          if (e.success) {
-            deleteCounter++;
-            if (deleteCounter == commentData.length) {
-              alert("삭제완료");
-              document.location.reload();
-            }
-          } else {
-            console.log("success: ", e.commend_id)
-          }
-        },
-        error: function () {
-          alert("ajax failure")
-        }
-      })
+    if(queryString.length > 0) {
+      queryString = '?'+queryString;
     }
+    return (repoAddress+repoFilePathString+filePath+queryString);
   }
+
+  // 스타일시트 추가
+  ruliFunctions.enqueueStyle = function(styleSheetURI) {
+    var style  = document.createElement("link");
+    style.rel  = "stylesheet";
+    style.type = "text/css";
+    style.href = styleSheetURI;
+    document.head.appendChild(style);
+  }
+  ruliFunctions.appendStyle = function(contents) {
+    var styleElement = document.createElement("style");
+    styleElement.textContent = contents;
+    styleElement.type = "text/css";
+    document.head.appendChild(styleElement);
+  }
+  // 실행부분
+  ruliFunctions.execute = function() {
+    console.log("execute");
+    ruliFunctions.enqueueStyle( ruliFunctions.getFileURIFromRepo("styles/style.css") );
+    console.log("execute end");
+  }
+
+
+  ruliFunctions.execute();
 })();
