@@ -3,6 +3,7 @@
 
 # 설치/사용방법
 Tampermonkey등 유저스크립트 플러그인에서 아래 링크의 스크립트를 설치합니다.
+
 `https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer@latest/ruliweb_enhancer.js`
 
 # 댓삭기
