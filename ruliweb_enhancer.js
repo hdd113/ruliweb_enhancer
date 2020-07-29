@@ -17,7 +17,7 @@
 
   // CDN에서 파일 URI가져오기
   ruliFunctions.getFileURIFromRepo = function(filePath, queryString) {
-    const repoAddress = 'https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer@master/';
+    const repoAddress = 'https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer@latest/';
     const repoFilePathString = '';
     const defaultQueryString = '';
     if(!queryString) {
