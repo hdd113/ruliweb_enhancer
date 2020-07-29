@@ -90,7 +90,7 @@
             deleteCounter++;
             if (deleteCounter == commentData.length) {
               alert("삭제완료");
-              document.location.reload();
+              ruliFunctions.commentsPageProc();
             }
           } else {
             console.log("success: ", e.commend_id)
