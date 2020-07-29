@@ -6,4 +6,8 @@ body {
 #board_list {
   font: 12px "Malgun Gothic", Gulim, gulim,"굴림", 돋움, dotum, sans-serif;
 }
+
+#mycomment td {
+  background-color: transparent;
+}
 /*# sourceMappingURL=style.css.map */
