@@ -38,6 +38,19 @@
     }
   }
 
+  // Head부분 로드 대기
+  ruliFunctions.onBodyStart = function(callback) {
+    var watchFunc = function(list, observer) {
+      if(document.head && document.body) {
+        observer.disconnect();
+        callback();
+      }
+    }
+    var watcherConfig = { attributes: false, childList: true, subtree: true };
+    var headWatcher = new MutationObserver(watchFunc);
+    headWatcher.observe(window.document, watcherConfig);
+  }
+
   // 스타일시트 추가
   ruliFunctions.enqueueStyle = function(styleSheetURI) {
     var style  = document.createElement("link");
@@ -90,6 +103,7 @@
             deleteCounter++;
             if (deleteCounter == commentData.length) {
               alert("삭제완료");
+              $("#mycomment").find(".table_body").html("");
               ruliFunctions.commentsPageProc();
             }
           } else {
@@ -132,17 +146,23 @@
 
   // 실행부분
   // 즉시실행
-  ruliFunctions.execute = function() {
-    ruliFunctions.enqueueStyle( ruliFunctions.getFileURIFromRepo("styles/style.min.css") );
+  ruliFunctions.onExecute = function() {
+    if(!ruliFunctions.onExecuteState) {
+      ruliFunctions.enqueueStyle( ruliFunctions.getFileURIFromRepo("styles/style.min.css") );
+    }
+    ruliFunctions.onExecuteState = true;
   }
   // DOM 로드 이후 실행
   ruliFunctions.onLoad = function() {
-    if( ruliFunctions.uriMatch(/.*bbs\.ruliweb\.com\/member\/mypage\/mycomment.*/) ) {
-      ruliFunctions.commentsPageProc();
+    if(!ruliFunctions.onLoadState) {
+      if( ruliFunctions.uriMatch(/.*bbs\.ruliweb\.com\/member\/mypage\/mycomment.*/) ) {
+        ruliFunctions.commentsPageProc();
+      }
     }
+    ruliFunctions.onLoadState = true;
   }
 
   // 실행 스크립트
-  ruliFunctions.execute();
+  ruliFunctions.onBodyStart(ruliFunctions.onExecute);
   window.addEventListener("load", ruliFunctions.onLoad);
 })();
