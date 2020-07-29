@@ -102,7 +102,7 @@
       })
     }
   }
-  ruliFunctions.delAllCommentsBtn = function() {
+  ruliFunctions.delAllCommentsBtnAdd = function() {
     var $commentTable = $("#mycomment").find(".table_body");
     var delBtnHtml = 
       "<tr>" +
@@ -115,12 +115,16 @@
   ruliFunctions.commentsPageProc = function() {
     $(document).ready(function() {
       if($(".d_mycomment").length>0) {
-        ruliFunctions.delAllCommentsBtn();
+        ruliFunctions.delAllCommentsBtnAdd();
       } else {
-        var curPage = parseInt( window.location.href.match(/page\=(\d*)/)[1] );
-        if(curPage>1) {
-          var targetPage = window.location.href.replace( /page\=(\d*)/, "page="+(curPage-1) );
-          window.location.href = targetPage;
+        // 페이지에 댓글이 없을 경우 자동으로 페이지 넘김
+        //  - 페이지네이션 버튼 분석
+        //  - 페이지 링크가 있는 경우 마지막 페이지로 자동 이동
+        //  - 페이지 링크가 없는 경우 이전 페이지로 이동
+        var $pgWrapper = $(".paging_wrapper");
+        var $pgBtns = $pgWrapper.find("a");
+        if($pgBtns.length) {
+          window.location.href = $pgBtns[$pgBtns.length-1].href;
         }
       }
     });
