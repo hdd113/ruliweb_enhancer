@@ -1,8 +1,10 @@
+$font-list : "Malgun Gothic", "Apple SD Gothic Neo", Dotum, '돋움', sans-serif;
+
 body {
-  font: 12px/1.5 "Malgun Gothic", Dotum,'돋움',"Apple SD Gothic Neo",sans-serif;
+  font: 12px/1.5 $font-list;
 }
 #board_list {
-  font: 12px "Malgun Gothic", Gulim, gulim,"굴림", 돋움, dotum, sans-serif;
+  font: 12px $font-list;
 }
 
 #mycomment {
@@ -11,5 +13,15 @@ body {
   }
   td {
     background-color: transparent;
+  }
+}
+
+.common_write {
+  .common_write_wrapper {
+    .common_input_wrapper {
+      .common_input {
+        font: 12px/1.5 $font-list;
+      }
+    }
   }
 }
