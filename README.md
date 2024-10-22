@@ -4,7 +4,7 @@
 # 설치/사용방법
 Tampermonkey등 유저스크립트 플러그인에서 아래 링크의 스크립트를 설치합니다.
 
-`https://cdn.jsdelivr.net/gh/hdd1013/ruliweb_enhancer@latest/ruliweb_enhancer.js`
+`https://cdn.jsdelivr.net/gh/hdd113/ruliweb_enhancer@latest/ruliweb_enhancer.js`
 
 # 댓삭기
 사용자 정보의 댓글 페이지 하단에 전체삭제 버튼이 추가됩니다.
